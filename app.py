@@ -7,7 +7,7 @@ app.config['JSON_AS_ASCII'] = False
 @app.route('/')
 def page_lent():
     all_posts = get_all_posts()
-    return render_template('lent.html', all_posts=all_posts)
+    return render_template('index.html', all_posts=all_posts)
 
 
 app.run()
