@@ -46,7 +46,6 @@ def get_post_by_pk(pk):
     return None
 
 
-
 def load_all_comments(path=FILE_WITH_COMMENTS):
     """возвращает все комментарии"""
     with open(path, encoding='utf-8') as file:
@@ -61,9 +60,3 @@ def get_comments_by_postid(post_id):
         if comment['post_id'] == post_id:
             wanted_comments.append(comment)
     return wanted_comments
-
-
-# print(get_comments_by_postid(1))
-# pp(get_post_by_user('123'))
-# pp(search_for_posts('вот'))
-# pp(get_post_by_pk(20))

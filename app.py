@@ -12,7 +12,7 @@ def page_lent():
 
 
 @app.route('/post/<int:pk>')
-def page_post(pk):
+def page_post_by_id(pk):
     post = get_post_by_pk(pk)
     comments = get_comments_by_postid(pk)
     return render_template('post.html', post=post, comments=comments)
@@ -27,10 +27,31 @@ def page_with_founded_posts():
 
 @app.route('/user/<user_name>')
 def page_with_posts_by_user(user_name):
-    # user_name = request.args.get('user_name')
     posts = get_posts_by_user(user_name)
-    print(user_name)
+    return render_template('user_feed.html', posts=posts, user_name=user_name)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('no_page_404.html')
+
+
+@app.errorhandler(500)
+def page_server_error(error):
+    return render_template('server_error.html')
+
+
+@app.route('/api/posts/')
+def page_posts_as_api():
+    posts = get_all_posts()
+    return jsonify(posts)
+
+@app.route('/api/posts/<int:post_id>')
+def page_post_by_id_as_api(post_id)
+    post = get_post_by_pk(post_id)
+
+
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='127.0.0.1', port=7777)
