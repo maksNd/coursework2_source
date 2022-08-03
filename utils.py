@@ -6,11 +6,11 @@ from constants import FILE_WITH_COMMENTS, FILE_WITH_POSTS, FILE_WITH_BOOKMARKS
 
 def get_all_posts(path=FILE_WITH_POSTS):
     """возвращает посты"""
-    with open(FILE_WITH_POSTS, encoding='utf-8') as file:
+    with open(path, encoding='utf-8') as file:
         return json.load(file)
 
 
-def get_post_by_user(user_name):
+def get_posts_by_user(user_name):
     """
     возвращает посты определенного пользователя,
     или вызывает ошибку ValueError если у пользователя нет постов
@@ -47,6 +47,23 @@ def get_post_by_pk(pk):
 
 
 
+def load_all_comments(path=FILE_WITH_COMMENTS):
+    """возвращает все комментарии"""
+    with open(path, encoding='utf-8') as file:
+        return json.load(file)
+
+
+def get_comments_by_postid(post_id):
+    """возвращает комментарии рл post_id"""
+    all_comments = load_all_comments()
+    wanted_comments = []
+    for comment in all_comments:
+        if comment['post_id'] == post_id:
+            wanted_comments.append(comment)
+    return wanted_comments
+
+
+# print(get_comments_by_postid(1))
 # pp(get_post_by_user('123'))
 # pp(search_for_posts('вот'))
 # pp(get_post_by_pk(20))
