@@ -1,6 +1,4 @@
 import json
-from pprint import pp
-
 from constants import FILE_WITH_COMMENTS, FILE_WITH_POSTS, FILE_WITH_BOOKMARKS
 
 
@@ -52,7 +50,7 @@ def load_all_comments(path=FILE_WITH_COMMENTS):
         return json.load(file)
 
 
-def get_comments_by_postid(post_id):
+def get_comments_by_post_id(post_id):
     """возвращает комментарии рл post_id"""
     all_comments = load_all_comments()
     wanted_comments = []

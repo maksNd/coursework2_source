@@ -1,5 +1,11 @@
-from utils import get_all_posts, get_posts_by_user, get_post_by_pk, get_comments_by_postid, search_for_posts
+from utils import get_all_posts, get_posts_by_user, get_post_by_pk, get_comments_by_post_id, search_for_posts
 from flask import Flask, jsonify, render_template, request
+from logger import get_and_set_logger
+import logging
+
+get_and_set_logger()
+
+logger = logging.getLogger('basic')
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -7,6 +13,7 @@ app.config['JSON_AS_ASCII'] = False
 
 @app.route('/')
 def page_lent():
+    logger.info('request to main page')
     all_posts = get_all_posts()
     return render_template('index.html', all_posts=all_posts)
 
@@ -14,7 +21,7 @@ def page_lent():
 @app.route('/post/<int:pk>')
 def page_post_by_id(pk):
     post = get_post_by_pk(pk)
-    comments = get_comments_by_postid(pk)
+    comments = get_comments_by_post_id(pk)
     return render_template('post.html', post=post, comments=comments)
 
 
@@ -43,14 +50,16 @@ def page_server_error(error):
 
 @app.route('/api/posts/')
 def page_posts_as_api():
+    logger.info('request to /api/posts')
     posts = get_all_posts()
     return jsonify(posts)
 
+
 @app.route('/api/posts/<int:post_id>')
-def page_post_by_id_as_api(post_id)
+def page_post_by_id_as_api(post_id):
+    logger.info(f'request to /api/posts/{post_id}')
     post = get_post_by_pk(post_id)
-
-
+    return jsonify(post)
 
 
 if __name__ == '__main__':
