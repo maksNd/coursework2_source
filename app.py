@@ -1,4 +1,5 @@
 from utils import get_all_posts, get_posts_by_user, get_post_by_pk, get_comments_by_post_id, search_for_posts
+from utils_with_tags import change_words_with_tag_to_link_in_content, change_words_with_tag_to_link_in_all_posts
 from flask import Flask, jsonify, render_template, request
 from logger import get_and_set_logger
 import logging
@@ -21,20 +22,25 @@ def page_lent():
 @app.route('/post/<int:pk>')
 def page_post_by_id(pk):
     post = get_post_by_pk(pk)
+    post['content'] = change_words_with_tag_to_link_in_content(post['content'])
     comments = get_comments_by_post_id(pk)
     return render_template('post.html', post=post, comments=comments)
 
 
 @app.route('/search')
-def page_with_founded_posts():
+def page_with_posts_by_query():
     s = request.values.get('s')
     posts = search_for_posts(s)
+    for post in posts:
+        post['content'] = change_words_with_tag_to_link_in_content(post['content'])
     return render_template('search.html', posts=posts)
 
 
 @app.route('/user/<user_name>')
 def page_with_posts_by_user(user_name):
     posts = get_posts_by_user(user_name)
+    for post in posts:
+        post['content'] = change_words_with_tag_to_link_in_content(post['content'])
     return render_template('user_feed.html', posts=posts, user_name=user_name)
 
 

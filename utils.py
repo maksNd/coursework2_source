@@ -2,6 +2,7 @@ import json
 from constants import FILE_WITH_COMMENTS, FILE_WITH_POSTS, FILE_WITH_BOOKMARKS
 
 
+
 def get_all_posts(path=FILE_WITH_POSTS):
     """возвращает посты"""
     with open(path, encoding='utf-8') as file:
