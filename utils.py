@@ -23,9 +23,6 @@ def get_posts_by_user(user_name: str) -> list[dict]:
     return wanted_posts
 
 
-
-
-
 def search_for_posts(query: str) -> list[dict]:
     """Возвращает список постов по ключевому слову"""
     all_posts = get_all_posts()
