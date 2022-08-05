@@ -1,3 +1,6 @@
+from utils import get_all_posts
+
+
 def is_post_with_tag(content: str) -> bool:
     """Проверяет пост на наличие тэга #"""
     if '#' in content:
@@ -41,8 +44,19 @@ def change_words_with_tag_to_link_in_content(content: str) -> str:
     return content
 
 
-def change_words_with_tag_to_link_in_all_posts(posts: list[dict], key_for_change: str) -> list[dict]:
+def change_tag_words_to_link_in_all_posts_and_add_first_tag_word(posts: list[dict]) -> list[dict]:
     """Заменяет слова во всех постах на ссылки"""
     for post in posts:
-        post[key_for_change] = change_words_with_tag_to_link_in_content(post[key_for_change])
+        post['tag'] = get_first_tag_word(post['content'])
+        post[post['content']] = change_words_with_tag_to_link_in_content(post['content'])
     return posts
+
+
+def get_posts_by_tag_word(tag_word: str) -> list[dict]:
+    """Возвращает посты с тэгом"""
+    all_posts = get_all_posts()
+    wanted_posts = []
+    for post in all_posts:
+        if '#' + tag_word in post['content']:
+            wanted_posts.append(post)
+    return wanted_posts

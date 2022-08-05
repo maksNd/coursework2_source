@@ -23,14 +23,7 @@ def get_posts_by_user(user_name: str) -> list[dict]:
     return wanted_posts
 
 
-def get_posts_by_tag_word(tag_word: str) -> list[dict]:
-    """Возвращает посты с тэгом"""
-    all_posts = get_all_posts()
-    wanted_posts = []
-    for post in all_posts:
-        if tag_word in post['content']:
-            wanted_posts.append(post)
-    return wanted_posts
+
 
 
 def search_for_posts(query: str) -> list[dict]:

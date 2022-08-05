@@ -1,20 +1,21 @@
-from utils import get_all_posts, get_posts_by_user, get_post_by_pk, get_comments_by_post_id, search_for_posts, \
-    get_posts_by_tag_word
-from utils_with_tags import change_words_with_tag_to_link_in_content, get_first_tag_word
+from utils import get_all_posts, get_posts_by_user, get_post_by_pk, get_comments_by_post_id, search_for_posts
+from utils_with_tags import change_words_with_tag_to_link_in_content, get_first_tag_word, get_posts_by_tag_word
 from utills_with_bookmark import add_post_to_bookmarks, get_posts_from_bookmarks, delete_post_from_bookmarks
-from flask import Flask, jsonify, render_template, request, redirect
+from flask import Flask, render_template, request
 from logger import get_and_set_logger
 import logging
 from bp_bookmarks.bp_bookmarks import bp_bookmarks
+from bp_api.bp_api import bp_api
 
-get_and_set_logger()
+# get_and_set_logger()
 
-logger = logging.getLogger('basic')
+# logger = logging.getLogger('basic')
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 app.register_blueprint(bp_bookmarks)
+app.register_blueprint(bp_api)
 
 
 @app.route('/')
@@ -68,20 +69,6 @@ def page_not_found(error):
 @app.errorhandler(500)
 def page_server_error(error):
     return render_template('server_error_500.html')
-
-
-@app.route('/api/posts/')
-def page_posts_as_api():
-    logger.info('request to /api/posts')
-    posts = get_all_posts()
-    return jsonify(posts)
-
-
-@app.route('/api/posts/<int:post_id>')
-def page_post_by_id_as_api(post_id):
-    logger.info(f'request to /api/posts/{post_id}')
-    post = get_post_by_pk(post_id)
-    return jsonify(post)
 
 
 if __name__ == '__main__':
