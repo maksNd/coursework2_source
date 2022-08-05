@@ -2,15 +2,15 @@ import json
 from constants import FILE_WITH_COMMENTS, FILE_WITH_POSTS, FILE_WITH_BOOKMARKS
 
 
-def get_all_posts(path=FILE_WITH_POSTS):
+def get_all_posts(path: str = FILE_WITH_POSTS) -> list[dict]:
     """возвращает посты"""
     with open(path, encoding='utf-8') as file:
         return json.load(file)
 
 
-def get_posts_by_user(user_name):
+def get_posts_by_user(user_name: str) -> list[dict]:
     """
-    возвращает посты определенного пользователя,
+    Возвращает посты определенного пользователя,
     или вызывает ошибку ValueError если у пользователя нет постов
     """
     all_posts = get_all_posts()
@@ -23,7 +23,7 @@ def get_posts_by_user(user_name):
     return wanted_posts
 
 
-def get_posts_by_tag_word(tag_word):
+def get_posts_by_tag_word(tag_word: str) -> list[dict]:
     """Возвращает посты с тэгом"""
     all_posts = get_all_posts()
     wanted_posts = []
@@ -33,8 +33,8 @@ def get_posts_by_tag_word(tag_word):
     return wanted_posts
 
 
-def search_for_posts(query):
-    """возвращает список постов по ключевому слову"""
+def search_for_posts(query: str) -> list[dict]:
+    """Возвращает список постов по ключевому слову"""
     all_posts = get_all_posts()
     wanted_posts = []
     for post in all_posts:
@@ -43,8 +43,8 @@ def search_for_posts(query):
     return wanted_posts
 
 
-def get_post_by_pk(pk):
-    """возвращает один пост по его идентификатору"""
+def get_post_by_pk(pk: int) -> dict | None:
+    """Возвращает один пост по его идентификатору"""
     all_posts = get_all_posts()
     for post in all_posts:
         if post['pk'] == pk:
@@ -52,14 +52,14 @@ def get_post_by_pk(pk):
     return None
 
 
-def load_all_comments(path=FILE_WITH_COMMENTS):
-    """возвращает все комментарии"""
+def load_all_comments(path: str = FILE_WITH_COMMENTS) -> list[dict]:
+    """Возвращает все комментарии"""
     with open(path, encoding='utf-8') as file:
         return json.load(file)
 
 
-def get_comments_by_post_id(post_id):
-    """возвращает комментарии рл post_id"""
+def get_comments_by_post_id(post_id: int) -> list[dict]:
+    """Возвращает комментарии рл post_id"""
     all_comments = load_all_comments()
     wanted_comments = []
     for comment in all_comments:

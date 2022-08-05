@@ -16,9 +16,9 @@
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#skyprogram"></use>
             </svg>
         </a>
-        <a href="/bookmarks.html" class="header__bookmark-btn">
+        <a href="/bookmarks" class="header__bookmark-btn">
             <img src="/static/img/bookmark.png" alt="" class="header__bookmark-icon" width="28">
-            <span class="header__bookmark-counter">{{ all_posts | length }}</span>
+            <span class="header__bookmark-counter">{{ bookmarks | length }}</span>
         </a>
     </div>
 </header>
@@ -31,11 +31,12 @@
         </form>
     </div>
 
-    {% for post in all_posts %}
+
     <section class="items">
+        {% for post in all_posts %}
         <div class="items__item item">
             <div class="item__top">
-                <a href="/user/{{ post.poster_name }}" class="item__head">
+                <a href="/users/{{ post.poster_name }}" class="item__head">
                     <div class="item__ava-wrap">
                         <img src="{{ post.poster_avatar }}" alt="" class="item__ava" width="47">
                     </div>
@@ -43,7 +44,7 @@
                 </a>
             </div>
 
-            <a href="/post.html" class="item__post-link">
+            <a href="/post/{{ post.pk }}" class="item__post-link">
                 <img src="{{ post.pic }}" alt="" width="348" class="item__post-img">
             </a>
             <p class="item__descr">{{ post.content[:50] }}...</p>
@@ -55,9 +56,12 @@
             </div>
             <div class="item__post-bottom">
                 <a href="/post/{{ post.pk }}" class="item__btn-more">Подробнее</a>
+
                 <button type="button" class="item__bookmark-btn">
-                    <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24">
+                    <a href="/bookmarks/add/{{ post.pk }}" class="item__btn-more">
+                        <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24"></a>
                 </button>
+
             </div>
         </div>
         {% endfor %}

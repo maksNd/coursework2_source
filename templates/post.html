@@ -28,15 +28,18 @@
     <section class="items">
         <div class="items__item item item--post">
             <div class="item__top">
-                <a href="/user/{{ post.poster_name }}" class="item__head">
+                <a href="/users/{{ post.poster_name }}" class="item__head">
                     <div class="item__ava-wrap">
                         <img src="{{ post.poster_avatar }}" alt="" class="item__ava" width="47">
                     </div>
                     <span class="item__username">{{ post.poster_name }}</span>
                 </a>
+
                 <button type="button" class="item__bookmark-btn">
-                    <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24">
+                    <a href="/bookmarks/add/{{ post.pk }}" class="item__btn-more">
+                        <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24"></a>
                 </button>
+
             </div>
             <a href="" class="item__post-link">
                 <img src="{{ post.pic }}" alt="" width="348" class="item__post-img">

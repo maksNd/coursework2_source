@@ -16,19 +16,20 @@
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#back"></use>
             </svg>
         </a>
-        <a href="/user/{{ user_name }}" class="header__logo-link">
+        <a href="/users/{{ user_name }}" class="header__logo-link">
             <h1 class="header__logo-text">{{ user_name }}</h1>
         </a>
 
     </div>
 </header>
 
-{% for post in posts %}
+
 <main class="container">
     <section class="items">
+        {% for post in posts %}
         <div class="items__item item">
             <div class="item__top">
-                <a href="/user/{{ post.poster_name }}" class="item__head">
+                <a href="/users/{{ post.poster_name }}" class="item__head">
                     <div class="item__ava-wrap">
                         <img src="{{ post.poster_avatar }}" alt="" class="item__ava" width="47">
                     </div>
@@ -38,7 +39,9 @@
             <a href="/post/{{ post.pk }}" class="item__post-link">
                 <img src="{{ post.pic }}" alt="" width="348" class="item__post-img">
             </a>
-            <p class="item__descr"><a href="#{{ post.tag }}" class="item__tag">{{ post.tag }}</a> {{ post.content[:50] | safe }}...</p>
+            <p class="item__descr">
+                <a href="/tag/{{ post.tag[1:] }}" class="item__tag">{{ post.tag }}</a> {{ post.content[:50] | safe }}...
+            </p>
             <div class="item__post-info">
                 <div class="item__counter">
                     <img src="/static/img/eye.png" alt="" class="item__counter-icon" width="26">
@@ -47,14 +50,18 @@
             </div>
             <div class="item__post-bottom">
                 <a href="/post/{{ post.pk }}" class="item__btn-more">Подробнее</a>
+
                 <button type="button" class="item__bookmark-btn">
-                    <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24">
+                    <a href="/bookmarks/add/{{ post.pk }}" class="item__btn-more">
+                        <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24"></a>
                 </button>
+
             </div>
         </div>
+        {% endfor %}
     </section>
 </main>
-{% endfor %}
+
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
     <symbol id="back" viewbox="0 0 19 16" fill="none" width="19" height="16">
