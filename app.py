@@ -1,11 +1,11 @@
 from utils import get_all_posts, get_posts_by_user, get_post_by_pk, get_comments_by_post_id, search_for_posts, \
     get_posts_by_tag_word
-from utils_with_tags import change_words_with_tag_to_link_in_content, change_words_with_tag_to_link_in_all_posts, \
-    get_list_with_tag_words, get_first_tag_word
+from utils_with_tags import change_words_with_tag_to_link_in_content, get_first_tag_word
 from utills_with_bookmark import add_post_to_bookmarks, get_posts_from_bookmarks, delete_post_from_bookmarks
 from flask import Flask, jsonify, render_template, request, redirect
 from logger import get_and_set_logger
 import logging
+from bp_bookmarks.bp_bookmarks import bp_bookmarks
 
 get_and_set_logger()
 
@@ -13,6 +13,8 @@ logger = logging.getLogger('basic')
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
+
+app.register_blueprint(bp_bookmarks)
 
 
 @app.route('/')
@@ -56,25 +58,6 @@ def page_with_posts_by_tag(tag_word):
         post['tag'] = get_first_tag_word(post['content'])
         post['content'] = change_words_with_tag_to_link_in_content(post['content'])
     return render_template('tag.html', posts=posts, tag_word=tag_word)
-
-
-@app.route('/bookmarks/add/<int:pk>')
-def add_post_to_bookmarks_and_redirect(pk):
-    post = get_post_by_pk(pk)
-    add_post_to_bookmarks(post)
-    return redirect('/', code=302)
-
-
-@app.route('/bookmarks/')
-def page_with_bookmarks():
-    posts = get_posts_from_bookmarks()
-    return render_template('bookmarks.html', posts=posts)
-
-
-@app.route('/bookmarks/remove/<int:pk>')
-def delete_post_from_bookmark(pk):
-    delete_post_from_bookmarks(pk)
-    return redirect('/bookmarks/')
 
 
 @app.errorhandler(404)
