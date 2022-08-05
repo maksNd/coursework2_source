@@ -49,7 +49,8 @@
             <div class="item__post-bottom">
                 <a href="/post/{{ post.pk }}" class="item__btn-more">Подробнее</a>
                 <button type="button" class="item__bookmark-btn">
-                    <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24">
+                    <a href="/bookmarks/add/{{ post.pk }}" class="item__btn-more">
+                        <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24"></a>
                 </button>
             </div>
         </div>

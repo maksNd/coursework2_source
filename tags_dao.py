@@ -1,5 +1,5 @@
-from utils import get_all_posts
-
+from posts_dao import PostsDAO
+posts_dao = PostsDAO()
 
 class TagsDAO:
 
@@ -50,7 +50,7 @@ class TagsDAO:
 
     def get_posts_by_tag_word(self, tag_word: str) -> list[dict]:
         """Возвращает посты с тэгом"""
-        all_posts = get_all_posts()
+        all_posts = posts_dao.get_all_posts()
         wanted_posts = []
         for post in all_posts:
             if '#' + tag_word in post['content']:

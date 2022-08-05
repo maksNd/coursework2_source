@@ -1,8 +1,9 @@
-from utills_with_bookmark import get_posts_from_bookmarks
 from flask import Flask, render_template, request
+
 from posts_dao import PostsDAO
 from comments_dao import CommentsDAO
 from tags_dao import TagsDAO
+from bookmark_dao import BookmarksDAO
 
 from bp_bookmarks.bp_bookmarks import bp_bookmarks
 from bp_api.bp_api import bp_api
@@ -11,6 +12,7 @@ from bp_error.bp_error import bp_error
 posts_dao = PostsDAO()
 comments_dao = CommentsDAO()
 tags_dao = TagsDAO()
+bookmark_dao = BookmarksDAO()
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -24,7 +26,7 @@ app.register_blueprint(bp_api, url_prefix='/api/')
 @app.route('/')
 def page_lent():
     all_posts = posts_dao.get_all_posts()
-    bookmarks = get_posts_from_bookmarks()
+    bookmarks = bookmark_dao.get_posts_from_bookmarks()
     return render_template('index.html', all_posts=all_posts, bookmarks=bookmarks)
 
 
