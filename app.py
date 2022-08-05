@@ -1,5 +1,7 @@
-from utils import get_all_posts, get_posts_by_user, get_post_by_pk, get_comments_by_post_id, search_for_posts
-from utils_with_tags import change_words_with_tag_to_link_in_content, change_words_with_tag_to_link_in_all_posts
+from utils import get_all_posts, get_posts_by_user, get_post_by_pk, get_comments_by_post_id, search_for_posts, \
+    get_posts_by_tag_word
+from utils_with_tags import change_words_with_tag_to_link_in_content, change_words_with_tag_to_link_in_all_posts, \
+    get_list_with_tag_words
 from flask import Flask, jsonify, render_template, request
 from logger import get_and_set_logger
 import logging
@@ -32,6 +34,7 @@ def page_with_posts_by_query():
     s = request.values.get('s')
     posts = search_for_posts(s)
     for post in posts:
+        post['tag'] = ' '.join(get_list_with_tag_words(post['content']))
         post['content'] = change_words_with_tag_to_link_in_content(post['content'])
     return render_template('search.html', posts=posts)
 
@@ -40,8 +43,15 @@ def page_with_posts_by_query():
 def page_with_posts_by_user(user_name):
     posts = get_posts_by_user(user_name)
     for post in posts:
+        post['tag'] = ' '.join(get_list_with_tag_words(post['content']))
         post['content'] = change_words_with_tag_to_link_in_content(post['content'])
     return render_template('user_feed.html', posts=posts, user_name=user_name)
+
+
+@app.route('/tag/<tag_word>')
+def page_with_posts_by_tag(tag_word):
+    posts = get_posts_by_tag_word(tag_word)
+    return render_template('tag.html', posts=posts, tag_word=tag_word)
 
 
 @app.errorhandler(404)
@@ -51,7 +61,7 @@ def page_not_found(error):
 
 @app.errorhandler(500)
 def page_server_error(error):
-    return render_template('server_error.html')
+    return render_template('server_error_500.html')
 
 
 @app.route('/api/posts/')
@@ -69,4 +79,4 @@ def page_post_by_id_as_api(post_id):
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=7777)
+    app.run(host='127.0.0.1', port=7777, debug=True)

@@ -35,14 +35,14 @@
                     <span class="item__username">{{ post.poster_name }}</span>
                 </a>
             </div>
-            <a href="/post.html" class="item__post-link">
+            <a href="/post/{{ post.pk }}" class="item__post-link">
                 <img src="{{ post.pic }}" alt="" width="348" class="item__post-img">
             </a>
-            <p class="item__descr"><a href="#" class="item__tag">#food</a> {{ post.content[:50] | safe }}...</p>
+            <p class="item__descr"><a href="#{{ post.tag }}" class="item__tag">{{ post.tag }}</a> {{ post.content[:50] | safe }}...</p>
             <div class="item__post-info">
                 <div class="item__counter">
                     <img src="/static/img/eye.png" alt="" class="item__counter-icon" width="26">
-                    <span class="item__counter-text">212</span>
+                    <span class="item__counter-text">{{ post.views_count }}</span>
                 </div>
             </div>
             <div class="item__post-bottom">
