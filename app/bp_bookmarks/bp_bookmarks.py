@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect
-from posts_dao import PostsDAO
-from bookmark_dao import BookmarksDAO
+from app.bp_posts.dao.posts_dao import PostsDAO
+from app.bp_bookmarks.dao.bookmark_dao import BookmarksDAO
 
 posts_dao = PostsDAO()
 bookmark_dao = BookmarksDAO()

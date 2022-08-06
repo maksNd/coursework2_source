@@ -1,5 +1,7 @@
-from posts_dao import PostsDAO
+from app.bp_posts.dao.posts_dao import PostsDAO
+
 posts_dao = PostsDAO()
+
 
 class TagsDAO:
 
