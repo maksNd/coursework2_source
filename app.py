@@ -12,9 +12,6 @@ app.register_blueprint(bp_bookmarks, url_prefix='/bookmarks/')
 app.register_blueprint(bp_api, url_prefix='/api/')
 
 
-# app.register_blueprint(bp_error)
-
-
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('no_page_404.html')
@@ -25,10 +22,5 @@ def page_server_error(error):
     return render_template('server_error_500.html')
 
 
-@app.errorhandler(ValueError)
-def page_value_error(error):
-    return render_template('error_no_posts.html', message=error)
-
-
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=7777, debug=True)
+    app.run(host='127.0.0.1', port=8888)

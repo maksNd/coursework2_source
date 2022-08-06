@@ -4,12 +4,14 @@ from constants import FILE_WITH_POSTS
 
 class PostsDAO:
 
-    def get_all_posts(self, path: str = FILE_WITH_POSTS) -> list[dict]:
+    data_source = FILE_WITH_POSTS
+
+    def get_all_posts(self) -> list[dict]:
         """Возвращает посты"""
-        with open(path, encoding='utf-8') as file:
+        with open(self.data_source, encoding='utf-8') as file:
             return json.load(file)
 
-    def get_posts_by_user(self, user_name: str) -> list[dict]:
+    def get_posts_by_user(self, user_name: str) -> list[dict] | None:
         """
         Возвращает посты определенного пользователя,
         или вызывает ошибку ValueError если у пользователя нет постов
@@ -20,7 +22,7 @@ class PostsDAO:
             if post['poster_name'].strip().lower() == user_name.strip().lower():
                 wanted_posts.append(post)
         if len(wanted_posts) == 0:
-            raise ValueError(f'У пользователя {user_name} еще нет постов')
+            return None
         return wanted_posts
 
     def search_for_posts(self, query: str) -> list[dict]:
@@ -39,3 +41,12 @@ class PostsDAO:
             if post['pk'] == pk:
                 return post
         return None
+
+    def get_posts_by_tag_word(self, tag_word: str) -> list[dict]:
+        """Возвращает посты с тэгом"""
+        all_posts = self.get_all_posts()
+        wanted_posts = []
+        for post in all_posts:
+            if '#' + tag_word in post['content']:
+                wanted_posts.append(post)
+        return wanted_posts

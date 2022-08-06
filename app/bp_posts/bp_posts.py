@@ -23,6 +23,10 @@ def page_lent():
 @bp_posts.route('/post/<int:pk>')
 def page_post_by_id(pk):
     post = posts_dao.get_post_by_pk(pk)
+    if post is None:
+        message = f'Такого поста не существует'
+        return render_template('no_posts.html', message=message)
+
     post['content'] = tags_dao.change_tag_words_to_link_in_content(post['content'])
     comments = comments_dao.get_comments_by_post_id(pk)
     return render_template('post.html', post=post, comments=comments)
@@ -41,6 +45,10 @@ def page_with_posts_by_query():
 @bp_posts.route('/users/<user_name>')
 def page_with_posts_by_user(user_name):
     posts = posts_dao.get_posts_by_user(user_name)
+    if posts is None:
+        message = f'У пользователя {user_name} еще нет постов'
+        return render_template('no_posts.html', message=message)
+
     for post in posts:
         post['tag'] = tags_dao.get_first_tag_word(post['content'])
         post['content'] = tags_dao.change_tag_words_to_link_in_content(post['content'])
@@ -49,8 +57,14 @@ def page_with_posts_by_user(user_name):
 
 @bp_posts.route('/tag/<tag_word>')
 def page_with_posts_by_tag(tag_word):
-    posts = tags_dao.get_posts_by_tag_word(tag_word)
+    posts = posts_dao.get_posts_by_tag_word(tag_word)
     for post in posts:
         post['tag'] = tags_dao.get_first_tag_word(post['content'])
         post['content'] = tags_dao.change_tag_words_to_link_in_content(post['content'])
     return render_template('tag.html', posts=posts, tag_word=tag_word)
+
+
+# @bp_posts.errorhandler(500)
+# def page_server_error(error):
+#     return render_template('server_error_500.html')
+

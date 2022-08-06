@@ -3,14 +3,15 @@ from constants import FILE_WITH_COMMENTS
 
 
 class CommentsDAO:
+    data_source = FILE_WITH_COMMENTS
 
-    def load_all_comments(self, path: str = FILE_WITH_COMMENTS) -> list[dict]:
+    def load_all_comments(self) -> list[dict]:
         """Возвращает все комментарии"""
-        with open(path, encoding='utf-8') as file:
+        with open(self.data_source, encoding='utf-8') as file:
             return json.load(file)
 
     def get_comments_by_post_id(self, post_id: int) -> list[dict]:
-        """Возвращает комментарии рл post_id"""
+        """Возвращает комментарии по post_id"""
         all_comments = self.load_all_comments()
         wanted_comments = []
         for comment in all_comments:

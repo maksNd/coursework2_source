@@ -7,6 +7,7 @@ get_and_set_logger()
 logger = logging.getLogger('basic')
 
 posts_dao = PostsDAO()
+
 bp_api = Blueprint('bp_api', __name__)
 
 

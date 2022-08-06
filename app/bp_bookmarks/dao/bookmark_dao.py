@@ -3,16 +3,17 @@ from constants import FILE_WITH_BOOKMARKS
 
 
 class BookmarksDAO:
+    data_source = FILE_WITH_BOOKMARKS
 
-    def get_posts_from_bookmarks(self, file_with_bookmarks: str = FILE_WITH_BOOKMARKS) -> list[dict]:
+    def get_posts_from_bookmarks(self) -> list[dict]:
         """Загружает посты из файла"""
-        with open(file_with_bookmarks, encoding='utf-8') as file:
+        with open(self.data_source, encoding='utf-8') as file:
             posts = json.load(file)
         return posts
 
-    def send_posts_to_bookmarks(self, posts: list, file_with_bookmarks: str = FILE_WITH_BOOKMARKS) -> None:
+    def send_posts_to_bookmarks(self, posts: list[dict]) -> None:
         """Сохраняет посты в файл"""
-        with open(file_with_bookmarks, 'w', encoding='utf-8') as file:
+        with open(self.data_source, 'w', encoding='utf-8') as file:
             json.dump(posts, file, ensure_ascii=False, indent=2)
 
     def add_post_to_bookmarks(self, post: dict) -> None:

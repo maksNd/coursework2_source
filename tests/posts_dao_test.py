@@ -40,14 +40,3 @@ class TestPostsDao:
         assert post['pk'] == 1, "Неверный поиск"
         assert set(post.keys()) == post_keys_should_be, "Неверное множество ключей"
 
-    # def test_load_all_comments(self, posts_dao):
-    #     all_comments = posts_dao.load_all_comments()
-    #     assert type(all_comments) == list, "Возвращается не list"
-    #     assert len(all_comments) > 0, "Возвращается пустой список"
-    #     assert set(all_comments[0].keys()) == comment_keys_should_be, "Неверное множество ключей"
-    #
-    # def test_get_comments_by_post_id(self, posts_dao):
-    #     comment = posts_dao.get_comments_by_post_id(1)
-    #     assert type(comment) == list, "Возвращается не list"
-    #     assert comment[0]['post_id'] == 1, "Неверный поиск"
-    #     assert set(comment[0].keys()) == comment_keys_should_be, "Неверное множество ключей"

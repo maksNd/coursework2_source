@@ -1,8 +1,3 @@
-from app.bp_posts.dao.posts_dao import PostsDAO
-
-posts_dao = PostsDAO()
-
-
 class TagsDAO:
 
     def is_post_with_tag(self, content: str) -> bool:
@@ -49,12 +44,3 @@ class TagsDAO:
             post['tag'] = self.get_first_tag_word(post['content'])
             post[post['content']] = self.change_tag_words_to_link_in_content(post['content'])
         return posts
-
-    def get_posts_by_tag_word(self, tag_word: str) -> list[dict]:
-        """Возвращает посты с тэгом"""
-        all_posts = posts_dao.get_all_posts()
-        wanted_posts = []
-        for post in all_posts:
-            if '#' + tag_word in post['content']:
-                wanted_posts.append(post)
-        return wanted_posts
