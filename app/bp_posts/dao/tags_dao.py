@@ -4,8 +4,9 @@ class TagsDAO:
         """Проверяет пост на наличие тэга #"""
         if '#' in content:
             return True
+        return False
 
-    def clean_tag_ward(self, tag_word: str) -> str:
+    def clean_end_tag_word(self, tag_word: str) -> str:
         """Очищает слово с тэгом от символов в конце"""
         symbols_to_remove = ('.', ',', '!', '?')
         if tag_word[-1] in symbols_to_remove:
@@ -17,7 +18,7 @@ class TagsDAO:
         firs_tag_word = ''
         for word in content.split(' '):
             if len(word) > 1 and word[0] == '#':
-                firs_tag_word = self.clean_tag_ward(word)
+                firs_tag_word = self.clean_end_tag_word(word)
                 return firs_tag_word
         return firs_tag_word
 
@@ -26,7 +27,7 @@ class TagsDAO:
         words_with_tag = []
         for word in content.split(' '):
             if len(word) > 1 and word[0] == '#':
-                word = self.clean_tag_ward(word)
+                word = self.clean_end_tag_word(word)
                 words_with_tag.append(word)
         return words_with_tag
 
@@ -38,9 +39,9 @@ class TagsDAO:
                 content = content.replace(word, f'<a href="/tag/{word[1:]}">{word}</a>')
         return content
 
-    def change_tag_words_to_link_in_all_posts_and_add_first_tag_word(self, posts: list[dict]) -> list[dict]:
-        """Заменяет слова во всех постах на ссылки"""
-        for post in posts:
-            post['tag'] = self.get_first_tag_word(post['content'])
-            post[post['content']] = self.change_tag_words_to_link_in_content(post['content'])
-        return posts
+    # def change_tag_words_to_link_in_all_posts_and_add_first_tag_word(self, posts: list[dict]) -> list[dict]:
+    #     """Заменяет слова во всех постах на ссылки"""
+    #     for post in posts:
+    #         post['tag'] = self.get_first_tag_word(post['content'])
+    #         post[post['content']] = self.change_tag_words_to_link_in_content(post['content'])
+    #     return posts

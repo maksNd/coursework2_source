@@ -12,7 +12,7 @@ post_keys_should_be = {"poster_name", "poster_avatar", "pic",
                        "content", "views_count", "likes_count", "pk"}
 
 
-class TestPostsDao:
+class TestPostsDAO:
 
     def test_get_all_posts(self, posts_dao):
         posts = posts_dao.get_all_posts()
@@ -39,4 +39,11 @@ class TestPostsDao:
         assert type(post) == dict, "Возвращается не dict"
         assert post['pk'] == 1, "Неверный поиск"
         assert set(post.keys()) == post_keys_should_be, "Неверное множество ключей"
+
+
+    def test_get_post_by_tag_word(self, posts_dao):
+        posts = posts_dao.get_posts_by_tag_word('кот')
+        assert type(posts) == list, "Возвращается не list"
+        assert '#' in posts[0]['content'], "Неверный поиск"
+        assert set(posts[0].keys()) == post_keys_should_be, "Неверное множество ключей"
 
