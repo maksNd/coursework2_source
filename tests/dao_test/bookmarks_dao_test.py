@@ -1,4 +1,4 @@
-from tests.dao_test.constants_for_tests import MOCK_BOOKMARKS
+from tests.constants_for_tests import MOCK_BOOKMARKS
 import json
 
 import pytest

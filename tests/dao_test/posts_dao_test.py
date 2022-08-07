@@ -1,4 +1,4 @@
-from tests.dao_test.constants_for_tests import MOCK_POSTS
+from tests.constants_for_tests import MOCK_POSTS
 import pytest
 from app.bp_posts.dao.posts_dao import PostsDAO
 
@@ -9,7 +9,6 @@ mock_path = MOCK_POSTS
 
 @pytest.fixture()
 def posts_dao():
-    mock_path = 'tests/mock/posts_mock.json'
     posts_dao_instance = PostsDAO(mock_path)
     return posts_dao_instance
 
