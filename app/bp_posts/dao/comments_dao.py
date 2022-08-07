@@ -1,5 +1,5 @@
 import json
-from constants import FILE_WITH_COMMENTS
+from app.constants import FILE_WITH_COMMENTS
 
 
 class CommentsDAO:

@@ -1,5 +1,5 @@
 import json
-from constants import FILE_WITH_BOOKMARKS
+from app.constants import FILE_WITH_BOOKMARKS
 
 
 class BookmarksDAO:

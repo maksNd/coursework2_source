@@ -1,9 +1,8 @@
 import json
-from constants import FILE_WITH_POSTS
+from app.constants import FILE_WITH_POSTS
 
 
 class PostsDAO:
-
     data_source = FILE_WITH_POSTS
 
     def get_all_posts(self) -> list[dict]:
