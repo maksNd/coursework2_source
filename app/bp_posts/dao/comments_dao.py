@@ -5,6 +5,9 @@ from app.constants import FILE_WITH_COMMENTS
 class CommentsDAO:
     data_source = FILE_WITH_COMMENTS
 
+    def __init__(self, path: str = data_source):
+        self.data_source = path
+
     def load_all_comments(self) -> list[dict]:
         """Возвращает все комментарии"""
         with open(self.data_source, encoding='utf-8') as file:

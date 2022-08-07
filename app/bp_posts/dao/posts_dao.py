@@ -5,6 +5,9 @@ from app.constants import FILE_WITH_POSTS
 class PostsDAO:
     data_source = FILE_WITH_POSTS
 
+    def __init__(self, path: str = data_source):
+        self.data_source = path
+
     def get_all_posts(self) -> list[dict]:
         """Возвращает посты"""
         with open(self.data_source, encoding='utf-8') as file:
@@ -49,3 +52,7 @@ class PostsDAO:
             if '#' + tag_word in post['content']:
                 wanted_posts.append(post)
         return wanted_posts
+
+# posts = PostsDAO('tests/mock/posts_mock.json')
+#
+# print(posts.get_post_by_pk(1))

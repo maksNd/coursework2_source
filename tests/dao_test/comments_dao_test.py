@@ -4,7 +4,8 @@ import pytest
 
 @pytest.fixture()
 def comments_dao():
-    comments_dao_instance = CommentsDAO()
+    mock_path = 'tests/mock/comments_mock.json'
+    comments_dao_instance = CommentsDAO(mock_path)
     return comments_dao_instance
 
 
@@ -23,4 +24,5 @@ class TestCommentsDAO:
         comment = comments_dao.get_comments_by_post_id(1)
         assert type(comment) == list, "Возвращается не list"
         assert comment[0]['post_id'] == 1, "Неверный поиск"
+        assert comment[0]["comment"] == "Очень здорово!"
         assert set(comment[0].keys()) == comment_keys_should_be, "Неверное множество ключей"

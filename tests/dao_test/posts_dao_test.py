@@ -1,15 +1,17 @@
-from app.bp_posts.dao.posts_dao import PostsDAO
+from tests.dao_test.constants_for_tests import MOCK_POSTS
 import pytest
-
-
-@pytest.fixture()
-def posts_dao():
-    posts_dao_instance = PostsDAO()
-    return posts_dao_instance
-
+from app.bp_posts.dao.posts_dao import PostsDAO
 
 post_keys_should_be = {"poster_name", "poster_avatar", "pic",
                        "content", "views_count", "likes_count", "pk"}
+
+mock_path = MOCK_POSTS
+
+@pytest.fixture()
+def posts_dao():
+    mock_path = 'tests/mock/posts_mock.json'
+    posts_dao_instance = PostsDAO(mock_path)
+    return posts_dao_instance
 
 
 class TestPostsDAO:
@@ -38,12 +40,11 @@ class TestPostsDAO:
         post = posts_dao.get_post_by_pk(1)
         assert type(post) == dict, "Возвращается не dict"
         assert post['pk'] == 1, "Неверный поиск"
+        assert post['poster_name'] == 'neo', 'возвращается неверное имя'
         assert set(post.keys()) == post_keys_should_be, "Неверное множество ключей"
-
 
     def test_get_post_by_tag_word(self, posts_dao):
         posts = posts_dao.get_posts_by_tag_word('кот')
         assert type(posts) == list, "Возвращается не list"
         assert '#' in posts[0]['content'], "Неверный поиск"
         assert set(posts[0].keys()) == post_keys_should_be, "Неверное множество ключей"
-
