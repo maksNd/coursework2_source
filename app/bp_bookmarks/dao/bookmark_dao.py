@@ -19,8 +19,10 @@ class BookmarksDAO:
             posts = json.load(file)
         return posts
 
-    def add_post_to_bookmarks(self, post: dict) -> None:
+    def add_post_to_bookmarks(self, post: dict | None) -> None:
         """Добавляет посты в файл"""
+        if post is None:
+            return None
         posts = self.get_posts_from_bookmarks()
         posts.insert(0, post)
         self._safe_posts_to_bookmarks(posts)
