@@ -13,13 +13,11 @@ class PostsDAO:
         with open(self.data_source, encoding='utf-8') as file:
             return json.load(file)
 
-    def get_posts_by_user(self, user_name: str | None) -> list[dict] | None:
+    def get_posts_by_user(self, user_name: str) -> list[dict] | None:
         """
         Возвращает посты определенного пользователя
         или None, если постов не найдено
         """
-        if user_name is None:
-            return None
         all_posts = self.get_all_posts()
         wanted_posts = []
         for post in all_posts:

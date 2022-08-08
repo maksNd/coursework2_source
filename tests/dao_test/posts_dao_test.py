@@ -29,9 +29,6 @@ class TestPostsDAO:
         assert posts[0]['poster_name'] == 'leo', "Возвращаются неправильные посты"
         assert set(posts[0].keys()) == post_keys_should_be, "Неверное множество ключей"
 
-        posts = posts_dao.get_posts_by_user(None)
-        assert posts is None, "None в качестве аргумента обрабатывается неверно"
-
     def test_search_for_posts(self, posts_dao):
         posts = posts_dao.search_for_posts('1')
         assert type(posts) == list, "Возвращается не list"
@@ -42,13 +39,15 @@ class TestPostsDAO:
         posts = posts_dao.search_for_posts(None)
         assert posts is None, "None в качестве аргумента обрабатывается неверно"
 
-
     def test_get_post_by_pk(self, posts_dao):
         post = posts_dao.get_post_by_pk(1)
         assert type(post) == dict, "Возвращается не dict"
         assert post['pk'] == 1, "Неверный поиск"
         assert post['poster_name'] == 'neo', 'возвращается неверное имя'
         assert set(post.keys()) == post_keys_should_be, "Неверное множество ключей"
+
+        post = posts_dao.get_post_by_pk(1000)
+        assert post is None
 
     def test_get_post_by_tag_word(self, posts_dao):
         posts = posts_dao.get_posts_by_tag_word('кот')
