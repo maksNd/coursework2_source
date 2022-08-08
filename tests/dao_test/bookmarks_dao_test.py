@@ -51,6 +51,12 @@ class TestBookmarksDAO:
         assert {'pk': 'test_message_from_add_post'} in result
         self._clean_mock_file()
 
+        assert bookmarks_dao.add_post_to_bookmarks(None) is None
+        result = self._get_data_from_mock_file()
+        assert len(result) == 0
+        self._clean_mock_file()
+
+
     def test_delete_post_from_bookmarks(self, bookmarks_dao):
         self._write_test_data_to_mock_file()
         bookmarks_dao.delete_post_from_bookmarks(1000)
