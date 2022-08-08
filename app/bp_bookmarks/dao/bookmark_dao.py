@@ -8,16 +8,16 @@ class BookmarksDAO:
     def __init__(self, path: str = data_source):
         self.data_source = path
 
+    def _safe_posts_to_bookmarks(self, posts: list[dict]) -> None:
+        """Сохраняет посты в файл"""
+        with open(self.data_source, 'w', encoding='utf-8') as file:
+            json.dump(posts, file, ensure_ascii=False, indent=2)
+
     def get_posts_from_bookmarks(self) -> list[dict]:
         """Загружает посты из файла"""
         with open(self.data_source, encoding='utf-8') as file:
             posts = json.load(file)
         return posts
-
-    def _safe_posts_to_bookmarks(self, posts: list[dict]) -> None:
-        """Сохраняет посты в файл"""
-        with open(self.data_source, 'w', encoding='utf-8') as file:
-            json.dump(posts, file, ensure_ascii=False, indent=2)
 
     def add_post_to_bookmarks(self, post: dict) -> None:
         """Добавляет посты в файл"""

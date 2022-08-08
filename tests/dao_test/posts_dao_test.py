@@ -7,6 +7,7 @@ post_keys_should_be = {"poster_name", "poster_avatar", "pic",
 
 mock_path = MOCK_POSTS
 
+
 @pytest.fixture()
 def posts_dao():
     posts_dao_instance = PostsDAO(mock_path)
@@ -28,12 +29,19 @@ class TestPostsDAO:
         assert posts[0]['poster_name'] == 'leo', "Возвращаются неправильные посты"
         assert set(posts[0].keys()) == post_keys_should_be, "Неверное множество ключей"
 
+        posts = posts_dao.get_posts_by_user(None)
+        assert posts is None, "None в качестве аргумента обрабатывается неверно"
+
     def test_search_for_posts(self, posts_dao):
         posts = posts_dao.search_for_posts('1')
         assert type(posts) == list, "Возвращается не list"
         assert len(posts) > 0, "Возвращается пустой список"
-        assert ('1' in posts[0]['content']) == True, "Неверный поиск"
+        assert ('1' in posts[0]['content']) is True, "Неверный поиск"
         assert set(posts[0].keys()) == post_keys_should_be, "Неверное множество ключей"
+
+        posts = posts_dao.search_for_posts(None)
+        assert posts is None, "None в качестве аргумента обрабатывается неверно"
+
 
     def test_get_post_by_pk(self, posts_dao):
         post = posts_dao.get_post_by_pk(1)

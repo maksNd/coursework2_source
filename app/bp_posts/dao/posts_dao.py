@@ -9,15 +9,17 @@ class PostsDAO:
         self.data_source = path
 
     def get_all_posts(self) -> list[dict]:
-        """Возвращает посты"""
+        """Возвращает все посты"""
         with open(self.data_source, encoding='utf-8') as file:
             return json.load(file)
 
-    def get_posts_by_user(self, user_name: str) -> list[dict] | None:
+    def get_posts_by_user(self, user_name: str | None) -> list[dict] | None:
         """
-        Возвращает посты определенного пользователя,
-        или вызывает ошибку ValueError если у пользователя нет постов
+        Возвращает посты определенного пользователя
+        или None, если постов не найдено
         """
+        if user_name is None:
+            return None
         all_posts = self.get_all_posts()
         wanted_posts = []
         for post in all_posts:
@@ -27,8 +29,10 @@ class PostsDAO:
             return None
         return wanted_posts
 
-    def search_for_posts(self, query: str) -> list[dict]:
+    def search_for_posts(self, query: str | None) -> list[dict] | None:
         """Возвращает список постов по ключевому слову"""
+        if query is None:
+            return None
         all_posts = self.get_all_posts()
         wanted_posts = []
         for post in all_posts:
@@ -44,7 +48,7 @@ class PostsDAO:
                 return post
         return None
 
-    def get_posts_by_tag_word(self, tag_word: str) -> list[dict]:
+    def get_posts_by_tag_word(self, tag_word: str) -> list:
         """Возвращает посты с тэгом"""
         all_posts = self.get_all_posts()
         wanted_posts = []
@@ -52,7 +56,3 @@ class PostsDAO:
             if '#' + tag_word in post['content']:
                 wanted_posts.append(post)
         return wanted_posts
-
-# posts = PostsDAO('tests/mock/posts_mock.json')
-#
-# print(posts.get_post_by_pk(1))

@@ -35,6 +35,8 @@ def page_post_by_id(pk):
 @bp_posts.route('/search/')
 def page_with_posts_by_query():
     s = request.values.get('s')
+    if s is None:
+        return 'Nothing to search. Error 404', 404
     posts = posts_dao.search_for_posts(s)
     for post in posts:
         post['tag'] = tags_dao.get_first_tag_word(post['content'])
@@ -46,7 +48,7 @@ def page_with_posts_by_query():
 def page_with_posts_by_user(user_name):
     posts = posts_dao.get_posts_by_user(user_name)
     if posts is None:
-        message = f'У пользователя {user_name} еще нет постов'
+        message = f'Нет таких постов'
         return render_template('no_posts.html', message=message)
 
     for post in posts:
@@ -62,9 +64,3 @@ def page_with_posts_by_tag(tag_word):
         post['tag'] = tags_dao.get_first_tag_word(post['content'])
         post['content'] = tags_dao.change_tag_words_to_link_in_content(post['content'])
     return render_template('tag.html', posts=posts, tag_word=tag_word)
-
-
-# @bp_posts.errorhandler(500)
-# def page_server_error(error):
-#     return render_template('server_error_500.html')
-

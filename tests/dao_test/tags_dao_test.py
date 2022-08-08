@@ -15,14 +15,14 @@ class TestTagsDao:
         [('qwe#asd', True), ('wer wer', False), ('', False), ('!@$%^&*', False)]
     )
     def test_is_post_with_tag(self, tags_dao, test_input, expected):
-        assert tags_dao.is_post_with_tag(test_input) == expected
+        assert tags_dao._is_post_with_tag(test_input) == expected
 
     @pytest.mark.parametrize(
         "test_input, expected",
         [('#dog!', '#dog'), ('#cat.', '#cat'), ('ocean,', 'ocean'), ('water?', 'water'), ('food', 'food')]
     )
     def test_clean_end_tag_word(self, tags_dao, test_input, expected):
-        assert tags_dao.clean_end_tag_word(test_input) == expected
+        assert tags_dao._clean_end_tag_word(test_input) == expected
 
     @pytest.mark.parametrize(
         "test_input, expected",

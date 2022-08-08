@@ -5,9 +5,8 @@ from app.bp_bookmarks.bp_bookmarks import bp_bookmarks
 from app.bp_api.bp_api import bp_api
 from app.bp_error_handlers.bp_error_handlers import bp_error_handlers
 
-
 app = Flask(__name__)
-app.config['JSON_AS_ASCII'] = False
+app.json.ensure_ascii = False
 
 app.register_blueprint(bp_posts)
 app.register_blueprint(bp_bookmarks, url_prefix='/bookmarks/')
