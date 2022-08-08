@@ -11,6 +11,8 @@ bp_bookmarks = Blueprint('bp_bookmarks', __name__, template_folder='templates')
 @bp_bookmarks.route('/add/<int:pk>')
 def add_post_to_bookmarks_and_redirect(pk):
     post = posts_dao.get_post_by_pk(pk)
+    if post is None:
+        return 'No such post to add. Error 404', 404
     bookmark_dao.add_post_to_bookmarks(post)
     return redirect('/', code=302)
 
