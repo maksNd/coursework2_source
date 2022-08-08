@@ -48,7 +48,7 @@ def page_with_posts_by_query():
 def page_with_posts_by_user(user_name):
     posts = posts_dao.get_posts_by_user(user_name)
     if posts is None:
-        message = f'Нет таких постов'
+        message = f'У пользователя {user_name} еще нет постов'
         return render_template('no_posts.html', message=message)
 
     for post in posts:
